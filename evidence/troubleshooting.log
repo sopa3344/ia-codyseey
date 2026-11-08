@@ -1,0 +1,22 @@
++ docker run -d --name ia-codyseey-web-8080 ia-codyseey-web:lab
+docker: Error response from daemon: Conflict. The container name "/ia-codyseey-web-8080" is already in use by container "3d54534413d5f85ef026a828d6e31b3c17147b6c6a957deeb8629eb1093d9246". You have to remove (or rename) that container to be able to reuse that name.
+
+Run 'docker run --help' for more information
++ rc=125
++ echo expected-name-conflict-exit=125
+expected-name-conflict-exit=125
++ test 125 -eq 125
++ docker ps --filter name=ia-codyseey-web-8080
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                    NAMES
+3d54534413d5   ia-codyseey-web:lab   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   127.0.0.1:8080->80/tcp   ia-codyseey-web-8080
++ curl -fsS http://localhost:8080
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><title>Docker 실습</title>
+<h1>나의 첫 Docker 웹 서버</h1><p>IMAGE_VERSION_1</p></html>
++ git config --get user.name
+SoPa
++ git config --get user.email
+160595319+sopa3344@users.noreply.github.com
++ git remote -v
+origin	https://github.com/sopa3344/ia-codyseey.git (fetch)
+origin	https://github.com/sopa3344/ia-codyseey.git (push)
