@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
+for name in ia-codyseey-web-8080 ia-codyseey-web-8081 ia-codyseey-volume-before ia-codyseey-volume-after; do
+  if docker container inspect "$name" >/dev/null 2>&1; then
+    echo "이미 있는 실습 컨테이너입니다: $name. README의 '이미 만든 결과 보기'를 사용하세요."
+    exit 1
+  fi
+done
+if docker volume inspect ia-codyseey-data >/dev/null 2>&1; then
+  echo '기존 ia-codyseey-data 볼륨을 보존하기 위해 중단했습니다. 새 환경에서 실행하세요.'
+  exit 1
+fi
 mkdir -p evidence
 exec > >(tee evidence/lab.log) 2>&1
 set -x
@@ -8,7 +18,9 @@ date -Is
 whoami
 uname -r
 docker version
-docker inspect exec-practice --format '{{json .State}}'
+if docker container inspect exec-practice >/dev/null 2>&1; then
+  docker inspect exec-practice --format '{{json .State}}'
+fi
 LAB=$(mktemp -d /tmp/ia-codyseey-cli.XXXXXX)
 cd "$LAB"
 pwd
